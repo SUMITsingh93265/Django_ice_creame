@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}
+  Ice-cream recipe
+{% endblock %}
+
+{% block body %}
+<a href="/login" class="btn btn-danger" type="submit">Logout</a>
+<div class="container mt-5">
+    <form class="col-6 mx-auto card p-3" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <h1 style="font-family: 'Baskervville';">Add Ice-cream</h1>
+      <hr />
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Baskervville';">Ice-cream name</label>
+        <input type="text" class="form-control" name="ice_name" required />
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label" style="font-family: 'Baskervville';">Ice-cream discription</label>
+        <textarea class="form-control" name="ice_discription" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Baskervville';">Ice-cream Image</label>
+        <input type="file" class="form-control" name="ice_image" required />
+      </div>
+      <button type="submit" class="btn btn-success" style="font-family: 'Baskervville';">Add Ice-cream</button>
+    </form>
+
+    <div class="mt-5">
+      <div class="mx-auto col-6">
+        <form>
+          <div class="md-3">
+            <label for="exampleInputEmail1" class="form-label">Search food</label>
+            <input type="text" name="search" class="form-control" />
+          </div>
+          <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+      </div>
+    </div>
+
+    <hr />
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Sr.no</th>
+          <th scope="col">Ice-cream name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Image</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for recipe in ice_recipes %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ recipe.ice_name }}</td>
+            <td>{{ recipe.ice_discription }}</td>
+            {% if recipe.ice_image %}
+              <td>
+                <img src="{{ recipe.ice_image.url }}" alt="img" style="height: 150px;" />
+              </td>
+            {% endif %}
+            <td>
+              <a href="/delete_ice/{{ recipe.id }}/" class="btn btn-danger m-2">Delete</a>
+              <a href="/update_recipe/{{ recipe.id }}/" class="btn btn-success">Update</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

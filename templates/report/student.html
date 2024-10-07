@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}
+  Student data
+{% endblock %}
+
+{% block body %}
+
+<div class="ml-5 mt-5">
+    <form>
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="search" placeholder="Search">
+            </div>
+
+            <div class="col-md-6">
+                <button class="btn btn-success">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+  <div class="mt-5 ml-5 mr-5">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Sr.no</th>
+          <th scope="col">Student ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Department</th>
+          <th scope="col">E-mail</th>
+          <th scope="col">Age</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in queryset %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td><a href="{% url 'see_marks' student.student_id %}">{{ student.student_id }}</a></td>
+            <td>{{ student.student_name }}</td>
+            <td>{{ student.department }}</td>
+            <td>{{ student.student_email }}</td>
+            <td>{{ student.student_age }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-2 ml-5 mr-5 mb-2">
+    <div class="pagination">
+      <span class="step-links">
+        {% if queryset.has_previous %}
+          {% comment %} <a href="?page=1">&laquo; first</a> {% endcomment %}
+          <a href="?page={{ queryset.previous_page_number }}">&laquo; previous</a>
+        {% endif %}
+
+        <span class="current">Page {{ queryset.number }} of {{ queryset.paginator.num_pages }}.</span>
+
+        {% if queryset.has_next %}
+          <a href="?page={{ queryset.next_page_number }}">next &raquo;</a>
+          {% comment %} <a href="?page={{ queryset.paginator.num_pages }}">last &raquo;</a> {% endcomment %}
+        {% endif %}
+      </span>
+    </div>
+  </div>
+{% endblock %}

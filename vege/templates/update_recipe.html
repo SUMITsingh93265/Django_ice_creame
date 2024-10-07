@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}
+  Update recipe
+{% endblock %}
+
+{% block body %}
+  <div class="container mt-5">
+    <form class="col-6 mx-auto card p-3" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <h1 style="font-family: 'Baskervville';">Update Recipe</h1>
+      <hr />
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Baskervville';">Update Recipe name</label>
+        <input type="text" class="form-control" value="{{recipe.recipe_name}}" name="recipe_name"/>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label" style="font-family: 'Baskervville';">Update Recipe discription</label>
+        <textarea class="form-control" name="recipe_discription">{{recipe.recipe_discription}}</textarea>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Baskervville';">Update Recipe Image</label>
+        <input type="file" class="form-control" name="ice_cream_recipe_image" />
+      </div>
+      <button type="submit" class="btn btn-success" style="font-family: 'Baskervville';">Update recipe</button>
+    </form>
+  </div>
+{% endblock %}
